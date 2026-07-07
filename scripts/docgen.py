@@ -17,7 +17,7 @@ class DocGenBuildHook(BuildHookInterface):
                 "--from=markdown",
                 "--standalone",
                 "--variable",
-                f"footer={str(version)}",
+                f"footer={str(self.metadata.version)}",
                 "--variable",
                 f"date={str(today)}",
                 "--to=man",
