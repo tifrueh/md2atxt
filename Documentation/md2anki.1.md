@@ -5,7 +5,7 @@ section: "1"
 
 # NAME
 
-md2anki - Convert Markdown notes to Anki notes
+md2anki - convert Markdown notes to Anki notes
 
 # SYNOPSIS
 
