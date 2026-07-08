@@ -29,7 +29,7 @@ extension instead of "md". If only one input file was specified, then the exact
 path of the output file can be specified using the "**-o**" option.
 
 **Link Stage**
-: The link stage takes in a list of anki line files and links them together into
+: The link stage takes in a list of Anki line files and links them together into
 one text file that can be imported directly into Anki.
 
 # OPTIONS
