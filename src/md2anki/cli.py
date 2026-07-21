@@ -1,6 +1,6 @@
-from md2anki._version import __version__
-import argparse as ap
 import logging
+import argparse as ap
+from md2anki._version import __version__
 
 def main():
 
