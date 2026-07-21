@@ -2,7 +2,15 @@ import logging
 import argparse as ap
 from md2anki._version import __version__
 
-def main():
+def initialize_argparse():
+    """Initialise the argument parsing system.
+
+    arguments:
+        none
+
+    return:
+        An ArgumentParser object configured for the program.
+    """
 
     # Initialise the argument parser.
     parser = ap.ArgumentParser(
@@ -80,6 +88,13 @@ def main():
         type = str,
         nargs = "+"
     )
+
+    return parser
+
+def main():
+
+    # Initialise argument parser.
+    parser = initialize_argparse()
 
     # Parse arguments.
     args = parser.parse_args()
