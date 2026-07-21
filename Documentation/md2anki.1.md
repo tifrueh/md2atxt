@@ -17,8 +17,8 @@ md2anki - convert Markdown notes to Anki notes
 
 **md2anki** is a small program that can be used to convert notes written in
 Markdown (in a format specified in **md2anki.md**(5)) to Anki-importable text
-files. There are two stages to the conversion, which can run in sequence by
-default or can be individually selected using the "**-c**" and "**-l**" flags:
+files. There are two stages to the conversion, which run in sequence by default
+or can be individually selected using the "**-c**" and "**-l**" flags:
 
 **Conversion Stage**
 : The conversion stage takes in a list of files and converts them individually
