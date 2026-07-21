@@ -33,7 +33,7 @@ final Anki note shall be delimited by the following character sequence:
 
 # EXAMPLE
 
-A Markdown file that should become an Anki note with the identifier `foo`,
+A Markdown file that should become an Anki note with the identifier "`foo`",
 containing two fields with a simple question and an answer, would look as
 follows:
 

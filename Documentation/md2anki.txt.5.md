@@ -13,9 +13,9 @@ An Anki import file (of the kind used by **md2anki**(1)) consists of two parts;
 a header and a body.
 
 **Header Format**
-: The header consists of key-value pairs formatted as `#key:value`. The two
-headers `separator` and `html` shall always be set, to `semicolon` and to
-`true`, respectively. This is to make sure that the body is interpreted
+: The header consists of key-value pairs formatted as "`#key:value`". The two
+headers "`separator`" and "`html`" shall always be set, to "`semicolon`" and to
+"`true`", respectively. This is to make sure that the body is interpreted
 correctly.
 
 **Body Format**

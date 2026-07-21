@@ -10,9 +10,9 @@ md2anki.al - md2anki "al" file format
 # DESCRIPTION
 
 An Anki line file is, technically, a simple plain-text file, which contains a
-list of HTML chunks, separated by a single `;` character. Each such HTML chunk
-shall be enclosed by two `"` characters, one on each end, with every occurrence
-of `"` within the chunk either being escaped with a second `"` character or as
+list of HTML chunks, separated by a single "`;`" character. Each such HTML chunk
+shall be enclosed by two "`"`" characters, one on each end, with every occurrence
+of "`"`" within the chunk either being escaped with a second "`"`" character or as
 an HTML entity.
 
 Note that this is also exactly what the conversion stage of **md2anki**(1)
