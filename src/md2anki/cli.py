@@ -1,5 +1,6 @@
 from md2anki._version import __version__
 import argparse as ap
+import logging
 
 def main():
 
@@ -80,5 +81,12 @@ def main():
         nargs = "+"
     )
 
+    # Parse arguments.
     args = parser.parse_args()
-    print(args)
+
+    # Initialise logging system.
+    log = logging.getLogger(__name__)
+    logging.basicConfig(level = args.loglevel)
+
+    # Log parsed arguments to the debug log.
+    log.debug(args)
