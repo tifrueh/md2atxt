@@ -1,6 +1,8 @@
 import logging
 import argparse as ap
 from md2anki._version import __version__
+from md2anki.conversion import convert
+from md2anki.link import link
 
 
 def initialize_argparse():
@@ -108,3 +110,12 @@ def main():
 
     # Log parsed arguments to the debug log.
     log.debug(args)
+
+    # Run the correct stage based upon the arguments.
+    if args.convert:
+        convert(args, log)
+    elif args.link:
+        link(args, log)
+    else:
+        convert(args, log)
+        link(args, log)
