@@ -22,13 +22,13 @@ correctly.
 : The body follows after the header and is a concatenation of one or more Anki
 line files (see **md2anki.al**(5)), separated by a newline character.
 
-  While it is not technically incorrect to link Anki line files with an
-  inconsistent number of fields into a single Anki import file, doing this is
+  Note that while it is not technically incorrect to link Anki line files with
+  an inconsistent number of fields into a single Anki import file, doing this is
   discouraged due to the way Anki handles such files. See the Anki documentation
   for reference.
 
-Note that this is also exactly what the link stage of **md2anki**(1) produces if
-applied to one or many Anki line files.
+Also note that a file of this format is also exactly what the link stage of
+**md2anki**(1) produces if applied to one or more Anki line files.
 
 # NOTES
 
