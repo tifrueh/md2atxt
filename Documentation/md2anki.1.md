@@ -60,7 +60,7 @@ reference.
 : Set the logging level. Should be one of ( DEBUG | INFO | WARNING | ERROR |
 CRITICAL ).
 
-**-o**, **-\-output**
+**-o**, **-\-output** *OUT_FILE*
 : Specify an output file.
 
 **-v**, **-\-version**
