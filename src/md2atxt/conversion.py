@@ -10,6 +10,9 @@ import logging
 class ParseException(Exception):
     pass
 
+class NoteIDMissingException(Exception):
+    pass
+
 # ==============================================================================
 # = GLOBALS ====================================================================
 
@@ -60,6 +63,9 @@ def parse_file_string(file_string):
             "md":   [ "string" ] // A list of strings, each entry containing
                                  // one field of the parsed file.
         }
+
+    exceptions:
+        Raises a ParseException if the file doesn't parse.
     """
 
     log.debug(f"Parsing file contents: f{file_string}")
@@ -84,11 +90,18 @@ def extract_noteid(toml_string):
 
     return:
         A string containing the noteid.
+
+    exceptions:
+        Raises a TOMLDecodeError if the TOML is invalid (see tomllib).
+        Also raises a NoteIDMissingException if the noteid isn't specified.
     """
 
     log.debug(f"Extracting noteid from TOML: {toml_string}")
 
     data = tomllib.loads(toml_string)
+
+    if not "noteid" in data:
+        raise NoteIDMissingException("No noteid given.")
     result = data["noteid"]
 
     log.debug(f"Got: {result}")
@@ -132,6 +145,13 @@ def convert_file(in_file, out_file):
 
     returns:
         None
+
+    exceptions:
+        Raises a ParseException if the file doesn't parse.
+        Also raises a TOMLDecodeError if the metadata TOML is invalid.
+        Also raises a NoteIDMissingException if no noteid is specified.
+        Also may raise any exception the 'open()/read()/write()' functions may
+        raise.
     """
 
     log.info(f"Converting {in_file} -> {out_file}")
@@ -176,6 +196,21 @@ def convert(args):
         in_file = pathlib.Path(file)
         out_file = args.output if args.output else in_file.with_suffix(".al")
         out_list.append(str(out_file))
-        convert_file(str(in_file), str(out_file))
+        try:
+            convert_file(str(in_file), str(out_file))
+        except ParseException:
+            log.warning(f"{file} does not parse, skipping …")
+            break
+        except tomllib.TOMLDecodeError:
+            log.warning(f"{file} has invalid metadata, skipping …")
+            break
+        except NoteIDMissingException:
+            log.warning(f"{file} has no noteid, skipping …")
+            break
+        except FileNotFoundError:
+            log.warning(f"{file} not found, skipping …")
+        except PermissionError:
+            log.warning(f"Encountered permission error while processing {file}, skipping …")
+            break
 
     args.in_file = out_list
