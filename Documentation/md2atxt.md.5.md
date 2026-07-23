@@ -39,7 +39,7 @@ follows:
 
 ```markdown
 +++
-noteid: "foo"
+noteid = "foo"
 +++
 
 ## What is a bar?
