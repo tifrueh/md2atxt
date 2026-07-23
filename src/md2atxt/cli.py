@@ -127,9 +127,10 @@ def main():
 
     # Run the correct stage based upon the arguments.
     if args.convert:
-        convert(args, log)
+        convert(args)
     elif args.link:
-        link(args, log)
+        link(args)
     else:
-        convert(args, log)
-        link(args, log)
+        convert(args)
+        log.debug(f"New arguments: {args}")
+        link(args)

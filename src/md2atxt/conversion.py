@@ -1,8 +1,12 @@
 import subprocess
 import re
+import tomllib
+import pathlib
+import logging
 
 # ==============================================================================
 # = CUSTOM ERROR TYPES =========================================================
+
 class ParseException(Exception):
     pass
 
@@ -13,6 +17,7 @@ FILE_RES=r"^\+\+\+\s*(?P<toml>.*?)\s*\+\+\+\s*(?P<md>.*?)\s*$"
 FIELD_RES=r"\s*<!-- \|\| -->\s*"
 FILE_RE=re.compile(FILE_RES, re.DOTALL)
 FIELD_RE=re.compile(FIELD_RES)
+log=logging.getLogger(__name__)
 
 # ==============================================================================
 # = FUNCTIONS ==================================================================
@@ -27,6 +32,8 @@ def convert_string(md_string):
         A string containing the converted HTML.
     """
 
+    log.debug(f"Converting string: {md_string}")
+
     result = subprocess.run(
         [ "pandoc", "-f", "markdown", "-t", "html" ],
         input=md_string,
@@ -34,7 +41,11 @@ def convert_string(md_string):
         text=True
     )
 
-    return result.stdout
+    result = result.stdout.replace('"', "\"\"")
+
+    log.debug(f"Got: {result}")
+
+    return result
 
 def parse_file_string(file_string):
     """Parse a Markdown string read from a file into a dictionary structure.
@@ -51,6 +62,8 @@ def parse_file_string(file_string):
         }
     """
 
+    log.debug(f"Parsing file contents: f{file_string}")
+
     match = FILE_RE.match(file_string)
 
     if not match:
@@ -59,8 +72,56 @@ def parse_file_string(file_string):
     result = match.groupdict()
     result["md"] = FIELD_RE.split(result["md"])
 
+    log.debug(f"Got: f{result}")
+
     return result
 
+def extract_noteid(toml_string):
+    """Extract the 'noteid' attribute from TOML metadata.
+
+    arguments:
+        toml_string -- The TOML string to parse.
+
+    return:
+        A string containing the noteid.
+    """
+
+    log.debug(f"Extracting noteid from TOML: {toml_string}")
+
+    data = tomllib.loads(toml_string)
+    result = data["noteid"]
+
+    log.debug(f"Got: {result}")
+
+    return result
+
+def assemble_file(noteid, fields):
+    """Assemble the contents of an Anki line file from a noteid and
+    correctly escaped note fields.
+
+    arguments:
+        noteid -- The noteid for the Anki line file.
+        fields -- A list of HTML-formatted strings, with quotes correctly
+        escaped.
+
+    return:
+        An Anki line file as a string.
+    """
+
+    log.info(f"Assembling output file")
+    log.debug(f"Adding noteid: {noteid}")
+
+    result = f"\"{noteid}\""
+
+    for field in fields:
+        log.debug(f"Adding field: {field}")
+        result += f";\"{field}\""
+
+    if result[-1] != '\n':
+        log.debug(f"Adding trailing newline")
+        result += '\n'
+
+    return result
 
 def convert_file(in_file, out_file):
     """Convert a Markdown file to a Anki line file.
@@ -80,10 +141,21 @@ def convert_file(in_file, out_file):
         file_str = file.read()
         data_dict = parse_file_string(file_str)
 
-    return None
+    # Extract noteid from the TOML header.
+    noteid = extract_noteid(data_dict["toml"])
+
+    # Convert all fields.
+    fields = []
+    for md_field in data_dict["md"]:
+        fields.append(convert_string(md_field))
+
+    # Assemble and write Anki line file.
+    out = assemble_file(noteid, fields)
+    with open(out_file, "w") as file:
+        file.write(out)
 
 
-def convert(args, log):
+def convert(args):
     """Run the conversion stage based upon some parsed arguments.
 
     arguments:
@@ -97,3 +169,13 @@ def convert(args, log):
     """
 
     log.info("Running conversion stage …")
+
+    out_list = []
+
+    for file in args.in_file:
+        in_file = pathlib.Path(file)
+        out_file = args.output if args.output else in_file.with_suffix(".al")
+        out_list.append(str(out_file))
+        convert_file(str(in_file), str(out_file))
+
+    args.in_file = out_list

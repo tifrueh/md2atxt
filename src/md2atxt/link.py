@@ -1,4 +1,8 @@
-def link(args, log):
+import logging
+
+log=logging.getLogger(__name__)
+
+def link(args):
     """Run the link stage based upon some parsed arguments.
 
     arguments:
