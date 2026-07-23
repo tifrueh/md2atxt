@@ -77,3 +77,18 @@ def test_assemble_file():
         test_assemble_file_in_fields
     )
     assert result == test_assemble_file_out
+
+def test_convert_file():
+
+    module.convert_file(
+        "tests/test-01.md",
+        "tests/test-01.al",
+    )
+
+    with open("tests/test-01.al.expected") as exp_file:
+        exp = exp_file.read()
+
+    with open("tests/test-01.al") as res_file:
+        res = res_file.read()
+
+    assert res == exp
