@@ -120,7 +120,7 @@ def main():
             "Cannot set output file if multiple input files were specified."
         )
         exit(1)
-    elif args.convert and len(args.header) > 0:
+    elif args.convert and args.header:
         log.warning(
             "Header flag specified for conversion stage, ignoring."
         )
