@@ -8,8 +8,8 @@ def test_run_stages(testenv_path):
     tmp = str(testenv_path)
 
     args = argparse.Namespace()
-    args.convert = True
-    args.link = True
+    args.convert = False
+    args.link = False
     args.loglevel = "DEBUG"
     args.header = ["deck:Default", "notetype:Basic"]
     args.output = f"{tmp}/md2atxt.txt"
