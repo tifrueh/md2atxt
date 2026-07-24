@@ -96,6 +96,25 @@ def initialize_argparse():
     return parser
 
 
+def run_stages(args):
+    """Run the correct md2atxt stage(s) based upon some input arguments.
+
+    arguments:
+        args -- The argument namespace provided by argparse.
+
+    return:
+        None
+    """
+
+    if args.convert:
+        convert(args)
+    elif args.link:
+        link(args)
+    else:
+        convert(args)
+        link(args)
+
+
 def main():
 
     # Initialise argument parser.
@@ -125,12 +144,5 @@ def main():
             "Header flag specified for conversion stage, ignoring."
         )
 
-    # Run the correct stage based upon the arguments.
-    if args.convert:
-        convert(args)
-    elif args.link:
-        link(args)
-    else:
-        convert(args)
-        log.debug(f"New arguments: {args}")
-        link(args)
+    # Run the correct stage(s) based upon the arguments.
+    run_stages(args)
