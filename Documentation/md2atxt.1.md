@@ -68,6 +68,26 @@ CRITICAL ).
 
 # NOTES
 
+## Converter
+
+The Markdown converter **md2atxt** uses is **pandoc**(1), which needs to be
+installed for everything to work.
+
+The exact "from" filetype used is the following:
+
+```text
+markdown+implicit_figures+tex_math_dollars
+```
+
+And the additional command line flags used for the conversion are the following:
+
+```text
+--mathjax
+--embed-resources
+```
+
+## Source Code Management
+
 **md2atxt** is managed via GitHub at <https://github.com/tifrueh/md2atxt>.
 Should you find any bugs, you're very welcome to open an issue over there.
 
