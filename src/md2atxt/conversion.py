@@ -216,6 +216,7 @@ def convert(args):
             break
         except FileNotFoundError:
             log.warning(f"{file} not found, skipping …")
+            break
         except PermissionError:
             log.warning(
                 f"Encountered permission error while processing {file},"
