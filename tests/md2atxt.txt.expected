@@ -1,0 +1,24 @@
+#separator:semicolon
+#html:true
+#deck:Default
+#notetype:Basic
+"foo";"<h2 id=""what-is-a-bar"">What is a bar?</h2>
+";"<p>A bar is usually a baz.</p>
+";"<p>There’s a second part here.</p>
+";"<p>And a “third”.</p>
+"
+"foo2";"<h2 id=""how-do-we-baz"">How do we baz?</h2>
+";"<p>Well, that’s the thing.</p>
+";"<p>Sometimes we do, sometimes we don’t.</p>
+";"<p>But <em>how</em>? About that one, nobody is actually sure.</p>
+"
+"foo3";"<h2 id=""when-do-we-not-baz"">When do we <em>not</em> baz?</h2>
+";"<p>Well, that’s a very good question.</p>
+";"<p>Many philosophers have debated it. How about some <span
+class=""math inline"">math</span> instead? Or maybe even some physics:</p>
+<p><span
+class=""math display""><em>E</em> = <em>m</em><em>c</em><sup>2</sup></span></p>
+";"<p>*to the side* Did I get them? Are they distracted? <em>Whew</em>,
+thank the gods. I really wouldn’t have liked to tell them the answer.
+It’s quite disturbing, that one.</p>
+"
