@@ -1,4 +1,5 @@
 import argparse
+import pathlib
 import md2atxt.conversion as module
 
 test_convert_string_in = """# Testfile
@@ -132,5 +133,40 @@ def test_convert(testenv_path):
 
     with open(f"{tmp}/test-03.al") as res_file:
         res.append(res_file.read())
+
+    assert res == exp
+
+
+def test_convert_faulty(testenv_path):
+
+    tmp = str(testenv_path)
+
+    args = argparse.Namespace()
+    args.convert = True
+    args.link = False
+    args.loglevel = "DEBUG"
+    args.header = None
+    args.output = None
+    args.in_file = []
+
+    for nr in ["04", "05", "06", "07", "01", "02", "03"]:
+        args.in_file.append(f"{tmp}/test-{nr}.md")
+
+    print(args.in_file)
+
+    module.convert(args)
+
+    exp = []
+    res = []
+
+    for nr in ["01", "02", "03"]:
+        with open(f"{tmp}/test-{nr}.al.expected") as exp_file:
+            exp.append(exp_file.read())
+        with open(f"{tmp}/test-{nr}.al") as res_file:
+            res.append(res_file.read())
+
+    for nr in ["04", "05", "06", "07"]:
+        filepath = pathlib.Path(f"{tmp}/test-{nr}.al")
+        assert not filepath.exists()
 
     assert res == exp

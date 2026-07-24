@@ -49,3 +49,29 @@ def test_link(testenv_path):
         res = res_file.read()
 
     assert res == exp
+
+
+def test_link_faulty(testenv_path):
+
+    tmp = str(testenv_path)
+
+    args = argparse.Namespace()
+    args.convert = False
+    args.link = True
+    args.loglevel = "DEBUG"
+    args.header = ["deck:Default", "notetype:Basic"]
+    args.output = f"{tmp}/md2atxt.txt"
+    args.in_file = []
+
+    for nr in ["04", "05", "06", "07", "01", "02", "03"]:
+        args.in_file.append(f"{tmp}/test-{nr}.al.expected")
+
+    module.link(args)
+
+    with open(f"{tmp}/md2atxt.txt.expected") as exp_file:
+        exp = exp_file.read()
+
+    with open(f"{tmp}/md2atxt.txt") as res_file:
+        res = res_file.read()
+
+    assert res == exp
