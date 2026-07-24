@@ -3,5 +3,3 @@ Documentation/*
 _version.py
 __pycache__
 dist
-tests/*.al
-tests/*.txt

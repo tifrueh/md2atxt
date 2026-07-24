@@ -87,23 +87,27 @@ def test_assemble_file():
     assert result == test_assemble_file_out
 
 
-def test_convert_file():
+def test_convert_file(testenv_path):
+
+    tmp = str(testenv_path)
 
     module.convert_file(
-        "tests/test-01.md",
-        "tests/test-01.al",
+        f"{tmp}/test-01.md",
+        f"{tmp}/test-01.al",
     )
 
-    with open("tests/test-01.al.expected") as exp_file:
+    with open(f"{tmp}/test-01.al.expected") as exp_file:
         exp = exp_file.read()
 
-    with open("tests/test-01.al") as res_file:
+    with open(f"{tmp}/test-01.al") as res_file:
         res = res_file.read()
 
     assert res == exp
 
 
-def test_convert():
+def test_convert(testenv_path):
+
+    tmp = str(testenv_path)
 
     args = argparse.Namespace()
     args.convert = True
@@ -111,22 +115,22 @@ def test_convert():
     args.loglevel = "DEBUG"
     args.header = None
     args.output = None
-    args.in_file = ["tests/test-02.md", "tests/test-03.md"]
+    args.in_file = [f"{tmp}/test-02.md", f"{tmp}/test-03.md"]
     module.convert(args)
 
     exp = []
     res = []
 
-    with open("tests/test-02.al.expected") as exp_file:
+    with open(f"{tmp}/test-02.al.expected") as exp_file:
         exp.append(exp_file.read())
 
-    with open("tests/test-03.al.expected") as exp_file:
+    with open(f"{tmp}/test-03.al.expected") as exp_file:
         exp.append(exp_file.read())
 
-    with open("tests/test-02.al") as res_file:
+    with open(f"{tmp}/test-02.al") as res_file:
         res.append(res_file.read())
 
-    with open("tests/test-03.al") as res_file:
+    with open(f"{tmp}/test-03.al") as res_file:
         res.append(res_file.read())
 
     assert res == exp
