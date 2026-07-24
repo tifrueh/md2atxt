@@ -202,9 +202,9 @@ def convert(args):
     for file in args.in_file:
         in_file = pathlib.Path(file)
         out_file = args.output if args.output else in_file.with_suffix(".al")
-        out_list.append(str(out_file))
         try:
             convert_file(str(in_file), str(out_file))
+            out_list.append(str(out_file))
         except ParseException:
             log.warning(f"{file} does not parse, skipping …")
             break
