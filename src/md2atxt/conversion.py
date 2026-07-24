@@ -42,7 +42,15 @@ def convert_string(md_string):
     log.debug(f"Converting string: {md_string}")
 
     result = subprocess.run(
-        ["pandoc", "-f", "markdown", "-t", "html"],
+        [
+            "pandoc",
+            "-f",
+            "markdown+implicit_figures+tex_math_dollars",
+            "-t",
+            "html",
+            "--mathjax",
+            "--embed-resources"
+        ],
         input=md_string,
         capture_output=True,
         text=True

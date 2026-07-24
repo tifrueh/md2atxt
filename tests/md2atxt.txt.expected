@@ -14,10 +14,11 @@
 "
 "foo3";"<h2 id=""when-do-we-not-baz"">When do we <em>not</em> baz?</h2>
 ";"<p>Well, that’s a very good question.</p>
-";"<p>Many philosophers have debated it. How about some <span
-class=""math inline"">math</span> instead? Or maybe even some physics:</p>
-<p><span
-class=""math display""><em>E</em> = <em>m</em><em>c</em><sup>2</sup></span></p>
+";"<p>Many philosophers have debated it. How about some <span class=""math inline"">\(\text{math}\)</span> instead? Or maybe even some
+physics:</p>
+<p><span class=""math display"">\[
+E=mc^2
+\]</span></p>
 ";"<p>*to the side* Did I get them? Are they distracted? <em>Whew</em>,
 thank the gods. I really wouldn’t have liked to tell them the answer.
 It’s quite disturbing, that one.</p>
