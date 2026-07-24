@@ -21,10 +21,6 @@ Issues = "https://github.com/tifrueh/md2atxt/issues"
 [project.scripts]
 md2atxt = "md2atxt:cli.main"
 
-[tool.hatch.build]
-artifacts = ["Documentation/md2atxt.1"]
-exclude = ["Documentation/*.md"]
-
 [tool.hatch.version]
 source = "vcs"
 
