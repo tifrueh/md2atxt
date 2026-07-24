@@ -4,26 +4,30 @@ import tomllib
 import pathlib
 import logging
 
-# ==============================================================================
-# = CUSTOM ERROR TYPES =========================================================
+# =============================================================================
+# = CUSTOM ERROR TYPES ========================================================
+
 
 class ParseException(Exception):
     pass
 
+
 class NoteIDMissingException(Exception):
     pass
 
-# ==============================================================================
-# = GLOBALS ====================================================================
 
-FILE_RES=r"^\+\+\+\s*(?P<toml>.*?)\s*\+\+\+\s*(?P<md>.*?)\s*$"
-FIELD_RES=r"\s*<!-- \|\| -->\s*"
-FILE_RE=re.compile(FILE_RES, re.DOTALL)
-FIELD_RE=re.compile(FIELD_RES)
-log=logging.getLogger(__name__)
+# =============================================================================
+# = GLOBALS ===================================================================
 
-# ==============================================================================
-# = FUNCTIONS ==================================================================
+FILE_RES = r"^\+\+\+\s*(?P<toml>.*?)\s*\+\+\+\s*(?P<md>.*?)\s*$"
+FIELD_RES = r"\s*<!-- \|\| -->\s*"
+FILE_RE = re.compile(FILE_RES, re.DOTALL)
+FIELD_RE = re.compile(FIELD_RES)
+log = logging.getLogger(__name__)
+
+
+# =============================================================================
+# = FUNCTIONS =================================================================
 
 def convert_string(md_string):
     """Convert a Markdown string to HTML.
@@ -38,7 +42,7 @@ def convert_string(md_string):
     log.debug(f"Converting string: {md_string}")
 
     result = subprocess.run(
-        [ "pandoc", "-f", "markdown", "-t", "html" ],
+        ["pandoc", "-f", "markdown", "-t", "html"],
         input=md_string,
         capture_output=True,
         text=True
@@ -49,6 +53,7 @@ def convert_string(md_string):
     log.debug(f"Got: {result}")
 
     return result
+
 
 def parse_file_string(file_string):
     """Parse a Markdown string read from a file into a dictionary structure.
@@ -82,6 +87,7 @@ def parse_file_string(file_string):
 
     return result
 
+
 def extract_noteid(toml_string):
     """Extract the 'noteid' attribute from TOML metadata.
 
@@ -100,13 +106,14 @@ def extract_noteid(toml_string):
 
     data = tomllib.loads(toml_string)
 
-    if not "noteid" in data:
+    if "noteid" not in data:
         raise NoteIDMissingException("No noteid given.")
     result = data["noteid"]
 
     log.debug(f"Got: {result}")
 
     return result
+
 
 def assemble_file(noteid, fields):
     """Assemble the contents of an Anki line file from a noteid and
@@ -121,7 +128,7 @@ def assemble_file(noteid, fields):
         An Anki line file as a string.
     """
 
-    log.info(f"Assembling output file")
+    log.info("Assembling output file")
     log.debug(f"Adding noteid: {noteid}")
 
     result = f"\"{noteid}\""
@@ -131,10 +138,11 @@ def assemble_file(noteid, fields):
         result += f";\"{field}\""
 
     if result[-1] != '\n':
-        log.debug(f"Adding trailing newline")
+        log.debug("Adding trailing newline")
         result += '\n'
 
     return result
+
 
 def convert_file(in_file, out_file):
     """Convert a Markdown file to a Anki line file.
@@ -209,7 +217,10 @@ def convert(args):
         except FileNotFoundError:
             log.warning(f"{file} not found, skipping …")
         except PermissionError:
-            log.warning(f"Encountered permission error while processing {file}, skipping …")
+            log.warning(
+                f"Encountered permission error while processing {file},"
+                "skipping …"
+            )
             break
 
     args.in_file = out_list
