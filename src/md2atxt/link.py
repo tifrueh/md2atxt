@@ -55,13 +55,13 @@ def link(args):
             line_list.append(line)
         except FileNotFoundError:
             log.warning(f"{file} not found, skipping …")
-            break
+            continue
         except PermissionError:
             log.warning(
                 f"Encountered permission error while processing {file},"
                 "skipping …"
             )
-            break
+            continue
 
     line_list = map(lambda x: x if x[-1] == '\n' else x[:-1], line_list)
     import_file_str = assemble_header(args.header if args.header else [])

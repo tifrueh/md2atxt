@@ -210,22 +210,22 @@ def convert(args):
             out_list.append(str(out_file))
         except ParseException:
             log.warning(f"{file} does not parse, skipping …")
-            break
+            continue
         except tomllib.TOMLDecodeError:
             log.warning(f"{file} has invalid metadata, skipping …")
-            break
+            continue
         except NoteIDMissingException:
             log.warning(f"{file} has no noteid, skipping …")
-            break
+            continue
         except FileNotFoundError:
             log.warning(f"{file} not found, skipping …")
-            break
+            continue
         except PermissionError:
             log.warning(
                 f"Encountered permission error while processing {file},"
                 "skipping …"
             )
-            break
+            continue
 
     args.in_file = out_list
     log.debug(f"New arguments: {args}")
