@@ -201,7 +201,10 @@ def convert(args):
 
     for file in args.in_file:
         in_file = pathlib.Path(file)
-        out_file = args.output if args.output else in_file.with_suffix(".al")
+        if args.convert and args.output:
+            out_file = args.output
+        else:
+            out_file = in_file.with_suffix(".al")
         try:
             convert_file(str(in_file), str(out_file))
             out_list.append(str(out_file))
@@ -225,3 +228,4 @@ def convert(args):
             break
 
     args.in_file = out_list
+    log.debug(f"New arguments: {args}")

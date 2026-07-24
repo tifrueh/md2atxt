@@ -46,6 +46,7 @@ def initialize_argparse():
         action="store_true",
         required=False,
         help="Only run conversion stage.",
+        default=False
     )
     stage_selector_parser.add_argument(
         "-l",
@@ -53,6 +54,7 @@ def initialize_argparse():
         action="store_true",
         required=False,
         help="Only run link stage.",
+        default=False
     )
     parser.add_argument(
         "-L",
